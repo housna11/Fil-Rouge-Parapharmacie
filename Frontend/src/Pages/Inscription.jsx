@@ -2,11 +2,11 @@ import React from "react";
 
 export default function Inscription() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col mt-19">
       <div className="flex flex-col md:flex-row justify-center py-12">
 
         <div
-          className="md:w-1/2 max-w-md bg-white rounded-xl p-8 border flex flex-col justify-center"
+          className="md:w-1/2 max-w-md bg-white p-8 border rounded-l-2xl flex flex-col justify-center"
           style={{ borderColor: "#1A5788" }}>
           <h2 className="text-2xl font-bold text-[#4296DF] mb-4 text-center">Inscription</h2>
 
@@ -51,11 +51,11 @@ export default function Inscription() {
           </p>
         </div>
 
-        <div className="md:w-1/2 max-w-md mt-8 md:mt-0">
+        <div className="md:w-1/2 max-w-md mt-8 md:mt-0 ">
           <img
-            src="/femme1.jpg"
+            src="/serum.jpg"
             alt="Soins visage"
-            className="w-full object-cover rounded-lg shadow-lg"
+            className="w-full object-cover shadow-lg rounded-r-2xl"
           />
         </div>
       </div>

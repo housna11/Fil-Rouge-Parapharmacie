@@ -2,20 +2,20 @@ import React from "react";
 
 export default function Connexion() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col mt-19">
       <div className="flex flex-col md:flex-row  justify-center py-12 ">
         
         <div className="md:w-1/2 max-w-md">
           <img
             src="/femme1.jpg"
             alt="Soins visage"
-            className="w-full  object-cover rounded-lg shadow-lg"
+            className="w-full rounded-l-2xl object-cover shadow-lg"
           />
         </div>
 
         {/*formlr*/}
         <div
-          className="md:w-1/2 max-w-md bg-white rounded-xl p-8 border flex flex-col justify-center"
+          className="md:w-1/2 max-w-md bg-white p-8 border flex flex-col justify-center rounded-r-2xl"
           style={{ borderColor: "#1A5788" }}>
           <h2 className="text-2xl font-bold text-[#4296DF] mb-4 text-center">Connexion</h2>
           <p className="text-gray-600 text-center mb-6">Accédez à votre compte ParaPlus</p>
