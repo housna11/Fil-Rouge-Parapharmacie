@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Commande;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->create([
+            'email' => 'housna@test.com',
+            'role' => 'admin',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $users = User::factory(5)->create();
+
+        $products = Product::factory(10)->create();
+
+        $commandes = Commande::factory(5)->create([
+            'user_id' => $users->random()->id,
+        ]);
+
+        foreach ($commandes as $commande) {
+            $randomProducts = $products->random(rand(2,5));
+
+            foreach ($randomProducts as $product) {
+                $commande->products()->attach($product->id, [
+                    'quantite' => rand(1,3) 
+                ]);
+            }
+        }
     }
 }
