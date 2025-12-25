@@ -48,4 +48,10 @@ class User extends Authenticatable
     return $this->hasMany(Commande::class);
    }
 
+   public function panier()
+    {
+    return $this->hasOne(Panier::class);
+    }
+
+
 }

@@ -15,9 +15,15 @@ class Commande extends Model
         return $this->belongsToMany(Product::class, 'commande_produit');
     }
 
-     public function user()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function panier()
+    {
+    return $this->belongsTo(Panier::class);
+    }
+
 }
  

@@ -20,7 +20,6 @@ class CommandeFactory extends Factory
         return [
             'user_id' => user::factory(),
             'status' => 'en cours',
-            'quantite' => 1,
         ];
     }
 }

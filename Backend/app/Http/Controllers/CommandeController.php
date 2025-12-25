@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Commande;
+use App\Models\Panier;
 
 class CommandeController extends Controller
 {
@@ -11,7 +13,9 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        
+        $this->authorize('viewAny', Commande::class);
+        return Commande::with(['user', 'products'])->get();
+    
     }
 
     /**
@@ -19,7 +23,20 @@ class CommandeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        {
+        $panier = Panier::find($request->panier_id); 
+        $commande = Commande::create([
+            'user_id' => $panier->user_id,
+            'panier_id' => $panier->id,
+            'status' => 'en cours',
+        ]);
+
+        foreach ($panier->products as $product) {
+            $commande->products()->attach($product->id, ['quantite' => $product->pivot->quantite]);
+        }
+
+        return $commande->load('products');
+    }
     }
 
     /**
@@ -41,8 +58,10 @@ class CommandeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Commande $commande)
     {
-        //
+        $this->authorize('delete', $commande);
+        $commande->delete();
+        return response()->json(['message' => 'Commande supprimée']);
     }
 }
