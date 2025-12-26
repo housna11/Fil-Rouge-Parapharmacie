@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\PanierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
 // usercontrol
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
-    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 });
 // commandecont
 Route::middleware('auth:sanctum')->group(function () {
@@ -45,4 +46,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/commandes', [CommandeController::class, 'index']);
     Route::post('/commandes', [CommandeController::class, 'store']);
     Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy']);
+});
+// panier
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/panier', [PanierController::class, 'show']);             
+    Route::post('/panier/add', [PanierController::class, 'store']);       
+    Route::delete('/panier/remove/{product}', [PanierController::class, 'destroy']); 
 });

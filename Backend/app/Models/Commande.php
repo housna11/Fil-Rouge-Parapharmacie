@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Commande extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'status','quantite'];
+    protected $fillable = ['user_id', 'status'];
     
     public function products(){
         return $this->belongsToMany(Product::class, 'commande_produit');
