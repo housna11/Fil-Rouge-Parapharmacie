@@ -3,7 +3,7 @@ export default function HeroSection() {
   return (
     <div className="w-full">
 <section
-  className="h-[90vh] bg-cover bg-center"
+  className="h-[100vh] bg-cover bg-center"
   style={{ backgroundImage: "url('/pharmacien.jpg')" }}>
   <div className="w-full h-full flex items-center">
     <div className="max-w-4xl mx-auto px-6 text-white">

@@ -1,4 +1,5 @@
 import './App.css'
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './Components/Navbar';
 import Accueil from './Pages/Accueil'; 
@@ -9,6 +10,9 @@ import Connexion from './Pages/Connexion';
 import Inscription from './Pages/Inscription';
 import Catalogue from './Components/Catalogue';
 import Catalogues from './Pages/Catalogues';
+import Dashboard from './Pages/Dashboard';
+import ProductCard from './Components/ProductCard';
+import Detail from './Pages/Detail';
 
 function App() {
   return (
@@ -19,6 +23,9 @@ function App() {
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/catalogues" element={<Catalogue />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/detail/:id" element={<Detail />} />
+
       </Routes>
     </Router>
   )

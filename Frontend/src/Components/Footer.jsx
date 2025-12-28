@@ -63,7 +63,7 @@ export default function Footer() {
       </div>
 
       
-      <div className="text-center mt-12 px-6">
+      {/* <div className="text-center mt-12 px-6">
         <h3 className="font-semibold text-lg mb-2">Newsletter</h3>
         <p className="text-sm mb-6">
           Abonnez-vous à notre newsletter et recevez nos nouveautés, conseils
@@ -77,7 +77,7 @@ export default function Footer() {
             S'abonner
           </button>
         </div>
-      </div>
+      </div> */}
 
       
       <div className="text-center text-sm mt-12 pb-6">
