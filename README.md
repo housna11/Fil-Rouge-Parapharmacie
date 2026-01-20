@@ -144,37 +144,35 @@ Le projet vise à proposer une solution **simple**, et **sécurisée**.
 
 ## 📦 Livrables
 
-* Application web fonctionnelle
-* Planification jira
- <a href="https://housnafathi.atlassian.net/jira/software/c/projects/FR/boards/2/backlog?selectedIssue=FR-72" target="_blank" style="text-decoration:none;">
-  <kbd>Voir la planification</kbd>
- </a>
-* Cahier des charges 
- <a href="https://docs.google.com/document/d/1TMWIRWXHiY7Q_m00OJVrJKTfoYozbaDjt8Ar_OlYCyc/edit?tab=t.0" target="_blank" style="text-decoration:none;">
-  <kbd>Cahier des charges</kbd>
-</a>
-* Figma
- <a href="https://www.figma.com/design/exHfeTuXVmNT76ujDiSZHj/ParaPlus?node-id=0-1&t=3uOcwL84FqZ8lwhk-1" target="_blank" style="text-decoration:none;">
-  <kbd>Maquettes</kbd>
-</a>
-* Diagrammes UML 
- <a href="https://lucid.app/lucidchart/691bbc5c-e810-41e3-a62f-a58d16902d6b/edit?viewport_loc=-2332%2C-1157%2C3101%2C1404%2C0_0&invitationId=inv_9594a47a-57bb-4565-b5f0-e7e7fba95368" target="_blank" style="text-decoration:none;">
-  <kbd>Diagramme de Classes</kbd>
-</a>
- <a href="https://lucid.app/lucidchart/cbbdedd9-f14e-4b71-99f8-645d20fb80f3/edit?viewport_loc=-1488%2C-627%2C2824%2C1278%2C0_0&invitationId=inv_01c236f8-3e6a-4748-ab78-2e797a4e09ea" target="_blank" style="text-decoration:none;">
-  <kbd>Diagramme de Cas d'utilisation</kbd>
-</a>
-* Code source GitHub (Laravel + React)
-* Dump base de données (SQL)
-* README + guide d’installation
-* Rapport de projet
-* Présentation de soutenance
-* Lien vers l’application déployée
+- ✅ **Application web fonctionnelle**
+
+- 📅 **Planification Jira**  
+  👉 [Voir la planification](https://housnafathi.atlassian.net/jira/software/c/projects/FR/boards/2/backlog?selectedIssue=FR-72)
+
+- 📄 **Cahier des charges**  
+  👉 [Consulter le cahier des charges](https://docs.google.com/document/d/1TMWIRWXHiY7Q_m00OJVrJKTfoYozbaDjt8Ar_OlYCyc/edit)
+
+- 🎨 **Maquettes Figma**  
+  👉 [Voir les maquettes](https://www.figma.com/design/exHfeTuXVmNT76ujDiSZHj/ParaPlus)
+
+- 📊 **Diagrammes UML**
+  - 👉 [Diagramme de classes](https://lucid.app/lucidchart/691bbc5c-e810-41e3-a62f-a58d16902d6b/edit)
+  - 👉 [Diagramme de cas d’utilisation](https://lucid.app/lucidchart/cbbdedd9-f14e-4b71-99f8-645d20fb80f3/edit)
+
+
+- 📘 **README + Guide d’installation**
+
+- 📝 **Rapport de projet**
+
+- 🎤 **Présentation de soutenance**
+
+- 🌐 **Lien vers l’application déployée**
 
 
 ## 👩‍💻 Réalisé par
 
-**HOUSNA FATHI** - Developpeuse web full-stack
-**SALMA HARDA** - Formatrice
+- **HOUSNA FATHI** – Développeuse web full-stack  
+- **SALMA HARDA** – Formatrice
+
 
 
