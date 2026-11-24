@@ -47,4 +47,18 @@ class Product extends Model
             )
             ->withTimestamps();
     }
+
+    // Les avis du produit
+    public function avis()
+    {
+        return $this->hasMany(Avis::class);
+    }
+
+    public function utilisateursFavoris()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'favoris'
+        )->withTimestamps();
+    }
 }

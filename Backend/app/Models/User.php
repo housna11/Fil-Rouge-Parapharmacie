@@ -34,4 +34,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Panier::class, 'user_id');
     }
+
+    // Les avis publiés par l'utilisateur
+    public function avis()
+    {
+        return $this->hasMany(Avis::class);
+    }
+
+    // Les produits favoris
+    public function favoris()
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'favoris'
+        )->withTimestamps();
+    }
 }
