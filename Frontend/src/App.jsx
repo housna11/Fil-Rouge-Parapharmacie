@@ -13,6 +13,7 @@ import Catalogues from './Pages/Catalogues';
 import Dashboard from './Pages/Dashboard';
 import ProductCard from './Components/ProductCard';
 import Detail from './Pages/Detail';
+import Panier from './Components/Panier';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/catalogues" element={<Catalogue />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/panier" element={<Panier />} />
 
       </Routes>
     </Router>

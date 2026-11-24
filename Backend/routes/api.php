@@ -23,12 +23,15 @@ use App\Http\Controllers\PanierController;
 //     return $request->user();
 // });
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);    
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/nouveau',[ProductController::class,'nouveau']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+
+
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/products', [ProductController::class, 'index']);
-    Route::get('/products/{product}', [ProductController::class, 'show']);
 
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{product}', [ProductController::class, 'update']);

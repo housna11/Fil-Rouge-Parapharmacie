@@ -18,8 +18,17 @@ class CommandeFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => user::factory(),
-            'status' => 'en cours',
+            'user_id' => User::factory(),
+            'status' => 'en_attente',
+            'total' => 0,
+            'nom_complet' => fake()->name(),
+            'telephone' => '0612345678',
+            'adresse' => fake()->address(),
+            'ville' => fake()->city(),
+            'code_postal' => null,
+            'notes' => null,
+            'payment_method' => 'cash_on_delivery',
+            'payment_status' => 'pending',
         ];
     }
 }

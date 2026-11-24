@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use App\Models\Product;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,21 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class Commande extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'status'];
-    
-    public function products(){
-        return $this->belongsToMany(Product::class, 'commande_produit');
+
+    protected $fillable = [
+        'user_id',
+        'status',
+        'total',
+        'nom_complet',
+        'telephone',
+        'adresse',
+        'ville',
+        'code_postal',
+        'notes',
+        'payment_method',
+        'payment_status',
+    ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'commande_produit')
+            ->withPivot(
+                'product_nom',
+                'product_image',
+                'prix_unitaire',
+                'quantite'
+            )
+            ->withTimestamps();
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function panier()
-    {
-    return $this->belongsTo(Panier::class);
-    }
-
 }
- 

@@ -24,7 +24,7 @@ export default function HeroSection() {
 </section>
 
 
-      <section className="py-16 text-center">
+      <section id="avantages" className="py-16 text-center">
         <h2 className="text-2xl font-bold text-[#4296DF] mb-12">
           Nos avantages
         </h2>

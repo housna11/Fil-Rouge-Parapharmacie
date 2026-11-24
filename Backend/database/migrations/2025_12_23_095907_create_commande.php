@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -6,25 +7,40 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('commandes', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->string('status')->default('en cours');
-        $table->timestamps();
-        
-    });
+            $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
+            $table->string('status')->default('en_attente');
+
+            $table->decimal('total', 10, 2)->default(0);
+
+            // Informations de livraison
+            $table->string('nom_complet');
+            $table->string('telephone');
+            $table->text('adresse');
+            $table->string('ville');
+            $table->string('code_postal')->nullable();
+            $table->text('notes')->nullable();
+
+            // Paiement
+            $table->string('payment_method')
+                ->default('cash_on_delivery');
+
+            $table->string('payment_status')
+                ->default('pending');
+
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('commande');
+        Schema::dropIfExists('commandes');
     }
 };

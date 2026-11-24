@@ -21,23 +21,44 @@ class CommandeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        {
-        $panier = Panier::find($request->panier_id); 
-        $commande = Commande::create([
-            'user_id' => $panier->user_id,
-            'panier_id' => $panier->id,
-            'status' => 'en cours',
+ public function store(Request $request)
+{
+    $user = $request->user(); // سواء admin أو user
+
+    // ممنوع تمرير user_id من frontend
+    // دايماً ناخدو user connecté
+
+    $panier = Panier::where('user_id', $user->id)
+        ->with('products')
+        ->first();
+
+    if (!$panier || $panier->products->isEmpty()) {
+        return response()->json(['message' => 'Panier vide'], 400);
+    }
+
+    $commande = Commande::create([
+        'user_id'   => $user->id, // 👈 مهم
+        'panier_id' => $panier->id,
+        'status'    => 'en cours',
+    ]);
+
+    foreach ($panier->products as $product) {
+        $commande->products()->attach($product->id, [
+            'quantite' => $product->pivot->quantite
         ]);
-
-        foreach ($panier->products as $product) {
-            $commande->products()->attach($product->id, ['quantite' => $product->pivot->quantite]);
-        }
-
-        return $commande->load('products');
     }
-    }
+
+    // تفريغ panier
+    $panier->products()->detach();
+    $panier->update(['total' => 0]);
+
+    return response()->json([
+        'message' => 'Commande créée avec succès',
+        'commande' => $commande->load('products')
+    ]);
+}
+
+
 
     /**
      * Display the specified resource.

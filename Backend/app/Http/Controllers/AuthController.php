@@ -16,7 +16,7 @@ public function register(RegisterRequest $request)
         'nom' => $request->nom,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => 'utilisateur',
+        'role' => 'client',
     ]);
 
     $token = $user->createToken('auth_token')->plainTextToken;
@@ -25,7 +25,7 @@ public function register(RegisterRequest $request)
         'message' => 'Inscription réussie',
         'user' => $user,
         'token' => $token,
-    ]);
+    ],201);
 
     }
 

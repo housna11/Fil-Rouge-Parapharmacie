@@ -20,19 +20,50 @@ class PanierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePanierRequest $request)
-    {
-            $panier = Panier::firstOrCreate(
-            ['user_id' => $request->user()->id],
-            ['total' => 0]
-        );
+public function store(Request $request)
+{
+    $user = $request->user();
+    if (!$user) {
+        return response()->json(['message' => 'Non authentifié'], 401);
+    }
 
-        $panier->products()->attach($request->product_id, [
-            'quantite' => $request->quantite ?? 1
+    $items = $request->input('items', []);
+    if (empty($items)) {
+        return response()->json(['message' => 'Aucun produit à ajouter'], 400);
+    }
+
+    $panier = Panier::firstOrCreate(
+        ['user_id' => $user->id],
+        ['total' => 0]
+    );
+
+    $total = 0;
+
+    foreach ($items as $item) {
+        $product = Product::find($item['product_id']);
+        if (!$product) continue; // ignore produit invalide
+
+        $quantity = isset($item['quantite']) && $item['quantite'] > 0 ? $item['quantite'] : 1;
+
+        // syncWithoutDetaching pour éviter les doublons
+        $panier->products()->syncWithoutDetaching([
+            $product->id => ['quantite' => $quantity]
         ]);
 
-        return response()->json(['message' => 'Produit ajouté au panier']);
+        $total += $product->prix * $quantity;
     }
+
+    // mettre à jour le total du panier
+    $panier->total = $total;
+    $panier->save();
+
+    return response()->json([
+        'message' => 'Commande enregistrée',
+        'panier' => $panier->load('products')
+    ]);
+}
+
+
 
     /**
      * Display the specified resource.

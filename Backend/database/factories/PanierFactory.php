@@ -1,9 +1,7 @@
 <?php
 
 namespace Database\Factories;
-use APP\Models\User;
-use APP\Models\Commande;
-
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +16,9 @@ class PanierFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'user_id' => User::factory(), 
-            Commande::factory(),
-            'total' => $this->faker->numberBetween(0, 500), 
+         return [
+            'user_id' => User::factory(),
+            'total' => 0,
         ];
     }
 }

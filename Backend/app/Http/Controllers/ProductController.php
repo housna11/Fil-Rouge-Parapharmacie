@@ -6,6 +6,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 
 class ProductController extends Controller
@@ -13,27 +15,49 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::all();
-    }
+        $query = Product::query();
 
+
+        if ($request->marque) {
+        $query->where('marque', $request->marque);
+        }
+
+        if ($request->recherche) {
+        $query->where('nom', 'like', '%' . $request->recherche . '%');
+        }
+
+        return $query->get();
+    }
+     
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreProductRequest $request)
-    {
-        $this->authorize('create', Product::class);
+{
+    $this->authorize('create', Product::class);
 
-        return Product::create($request->validated());
-    }
+    $data = $request->validated();
+
+    if ($request->hasFile('image')) {
+            $filePath = $request->file('image')->getRealPath();
+            $uploadedImage = Cloudinary::upload($filePath)->getSecurePath();
+            $data['image'] = $uploadedImage;
+        }
+
+    $product = Product::create($data);
+
+    return response()->json($product, 201); // JSON صالح للـ React
+}
+
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, $id)
     {
-        return $product;
+        return Product::findOrFail($id);
     }
 
     /**
@@ -61,5 +85,10 @@ class ProductController extends Controller
 
         return response()->json(['message' => 'Supprime']);
 
+    }
+
+    public function nouveau()
+    {
+       return Product::OrderBy('created_at', 'desc')->take(9)->get();
     }
 }

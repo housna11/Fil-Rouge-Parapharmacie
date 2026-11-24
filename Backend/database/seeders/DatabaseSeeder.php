@@ -1,59 +1,77 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Panier;
 
-use App\Models\Commande;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Panier;
+use App\Models\Commande;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-    User::factory()->create([
-        'email' => 'housna@test.com',
-        'role' => 'admin',
-    ]);
-
-    $users = User::factory(5)->create();
-    $products = Product::factory(10)->create();
-
-    foreach ($users as $user) {
-        Panier::create([
-            'user_id' => $user->id,
-            'total' => 0,
+        $admin = User::factory()->create([
+            'nom' => 'Admin',
+            'email' => 'housna@test.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
         ]);
-    }
 
-    $commandes = Commande::factory(5)->create([
-        'user_id' => $users->random()->id,
-    ]);
+        $users = User::factory(5)->create([
+            'role' => 'client',
+        ]);
 
-    foreach ($commandes as $commande) {
-        $randomProducts = $products->random(rand(2,5));
-        $total = 0;
+        $categories = collect([
+            'Visage',
+            'Cheveux',
+            'Corps',
+            'Hygiène',
+            'Compléments alimentaires',
+        ])->map(fn ($nom) => Category::create([
+            'nom' => $nom,
+            'slug' => \Illuminate\Support\Str::slug($nom),
+            'is_active' => true,
+        ]));
 
-        foreach ($randomProducts as $product) {
-            $qte = rand(1,3);
+        $products = Product::factory(10)->make()->each(function ($product) use ($categories) {
+            $product->category_id = $categories->random()->id;
+            $product->save();
+        });
 
-            $commande->products()->attach($product->id, [
-                'quantite' => $qte
+        foreach ($users as $user) {
+            Panier::create([
+                'user_id' => $user->id,
+                'total' => 0,
             ]);
-
-            $total += $product->prix * $qte;
         }
 
-        Panier::where('user_id', $commande->user_id)->update([
-                'commande_id' => $commande->id,
-                'total' => $total
+        foreach (range(1, 5) as $i) {
+            $user = $users->random();
+
+            $commande = Commande::factory()->create([
+                'user_id' => $user->id,
             ]);
+
+            $total = 0;
+
+            foreach ($products->random(2) as $product) {
+                $quantite = rand(1, 3);
+                $prix = (float) $product->prix;
+
+                $commande->products()->attach($product->id, [
+                    'product_nom' => $product->nom,
+                    'product_image' => $product->image,
+                    'prix_unitaire' => $prix,
+                    'quantite' => $quantite,
+                ]);
+
+                $total += $prix * $quantite;
+            }
+
+            $commande->update(['total' => $total]);
+        }
     }
-}
-        
-    
 }

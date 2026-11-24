@@ -1,7 +1,7 @@
 export default function Apropos() {
   return (
     <div>
-            <h2 className="text-center text-2xl font-bold text-[#4296DF] mb-12 aos-init ">A propos</h2>
+            <h2 id="apropos" className="text-center text-2xl font-bold text-[#4296DF] mb-12 aos-init ">A propos</h2>
         <div
             className="min-h-screen flex items-center justify-center bg-cover bg-center"
             style={{ backgroundImage: "url('/public/jeune-femme.jpg')" }}>
