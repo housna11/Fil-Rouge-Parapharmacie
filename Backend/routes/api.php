@@ -32,10 +32,7 @@ Route::get('/products/nouveau',[ProductController::class,'nouveau']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/{productId}/avis', [AvisController::class, 'index']);
 
-
-
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/products', [ProductController::class, 'store']);

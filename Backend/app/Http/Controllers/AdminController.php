@@ -14,8 +14,12 @@ class AdminController extends Controller
             'totalOrders' => Commande::count(),
             'totalReviews' => Avis::count(),
         ];
+       $moisNoms = [
+        1 => 'Jan', 2 => 'Fév', 3 => 'Mar', 4 => 'Avr',
+        5 => 'Mai', 6 => 'Juin', 7 => 'Juil', 8 => 'Août',
+        9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Déc',
+        ];
 
-        $moisNoms = ['', 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
         $ventesParMois = Commande::selectRaw('MONTH(created_at) as mois, SUM(total) as total')
             ->whereYear('created_at', date('Y'))
             ->groupBy('mois')
@@ -23,10 +27,12 @@ class AdminController extends Controller
             ->get();
 
         $salesChart = [];
-        foreach ($ventesParMois as $v) {
+        foreach ($moisNoms as $num => $nom) {
+            $ligne = $ventesParMois->firstWhere('mois', $num);
+
             $salesChart[] = [
-                'month' => $moisNoms[$v->mois],
-                'total' => (float) $v->total,
+                'month' => $nom,
+                'total' => $ligne ? (float) $ligne->total : 0,
             ];
         }
 
@@ -40,32 +46,27 @@ class AdminController extends Controller
             ];
         });
 
-        $recentActivities = [];
-        foreach (Commande::latest()->take(3)->get() as $cmd) {
-            $recentActivities[] = [
-                'id' => 'cmd-' . $cmd->id,
-                'type' => 'order',
-                'message' => "Nouvelle commande #{$cmd->id} par {$cmd->nom_complet}",
-                'time' => $cmd->created_at->diffForHumans(),
-            ];
-        }
-
-        foreach (Avis::with(['user', 'product'])->latest()->take(2)->get() as $avis) {
-            $userName = $avis->user ? $avis->user->nom : 'Client';
-            $prodName = $avis->product ? $avis->product->nom : 'Produit';
-            $recentActivities[] = [
-                'id' => 'avis-' . $avis->id,
-                'type' => 'review',
-                'message' => "{$userName} a laissé {$avis->note}★ sur {$prodName}",
-                'time' => $avis->created_at->diffForHumans(),
-            ];
-        }
+        $recentReviews = Avis::with(['user', 'product'])
+            ->latest()
+            ->take(5)
+            ->get()
+            ->map(function ($avis) {
+                return [
+                    'id'          => $avis->id,
+                    'client'      => $avis->user ? $avis->user->nom : 'Client',
+                    'product'     => $avis->product ? $avis->product->nom : 'Produit',
+                    'note'        => $avis->note,
+                    'commentaire' => $avis->commentaire,
+                    'is_visible'  => $avis->is_visible,
+                    'date'        => $avis->created_at->format('d/m/Y'),
+                ];
+            });
 
         return response()->json([
-            'stats' => $stats,
-            'salesChart' => $salesChart,
-            'recentOrders' => $recentOrders,
-            'recentActivities' => $recentActivities,
+            'stats'         => $stats,
+            'salesChart'    => $salesChart,
+            'recentOrders'  => $recentOrders,
+            'recentReviews' => $recentReviews,
         ]);
     }
 

@@ -1,8 +1,22 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuthStore from "../../Store/authStore";
-
+import { api } from "../../Api/api"; 
 export default function AdminSidebar() {
-  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+  const { token, logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    try {
+      if (token) {
+        await api.post("/logout", {}, token);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    } finally {
+      logout();
+      navigate("/");
+    }
+  };
 
   const links = [
     { name: "Dashboard", path: "/dashboard", icon: "fa-solid fa-chart-pie", end: true },
@@ -76,10 +90,11 @@ export default function AdminSidebar() {
       {/* LOGOUT */}
       <div className="p-4 border-t border-sky-100/80">
         <button
-          onClick={logout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition font-medium"
+          type="button"
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 cursor-pointer transition font-medium"
         >
-          <i className="fa-solid fa-right-from-bracket w-5 text-rose-400"></i>
+          <i className="fa-solid fa-right-from-bracket w-5 text-[#0284C7]"></i>
           <span className="text-sm">Déconnexion</span>
         </button>
 
