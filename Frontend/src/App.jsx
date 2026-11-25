@@ -10,9 +10,9 @@ import Inscription from './Pages/Inscription';
 import Catalogue from './Components/Catalogue';
 import Dashboard from './Pages/Dashboard';
 import Detail from './Pages/Detail';
-
 import AdminLayout from '../src/layouts/AdminLayout';
 import AvisManagement from './Pages/admin/AvisManagement';
+import ProductCard from '../src/Components/ProductCard';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Route element={<AdminLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/avis" element={<AvisManagement />} />
+          <Route path="/admin/produits" element={<ProductCard />} />
         </Route>
 
       </Routes>

@@ -21,7 +21,7 @@ export default function AdminSidebar() {
   const links = [
     { name: "Dashboard", path: "/dashboard", icon: "fa-solid fa-chart-pie", end: true },
     { name: "Utilisateurs", path: "/admin/users", icon: "fa-solid fa-users" },
-    { name: "Produits", path: "/admin/products", icon: "fa-solid fa-box" },
+    { name: "Produits", path: "/admin/produits", icon: "fa-solid fa-box" },
     { name: "Commandes", path: "/admin/commandes", icon: "fa-solid fa-cart-shopping" },
     { name: "Avis clients", path: "/admin/avis", icon: "fa-solid fa-star" },
   ];
