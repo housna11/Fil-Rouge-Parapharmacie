@@ -45,12 +45,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 });
-// commandecont
+// commande
 Route::middleware('auth:sanctum')->group(function () {
-    
-    Route::get('/commandes', [CommandeController::class, 'index']);
+
     Route::post('/commandes', [CommandeController::class, 'store']);
-    Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy']);
 });
 // panier
 Route::middleware('auth:sanctum')->group(function () {
@@ -75,4 +73,9 @@ Route::middleware(['auth:sanctum','admin'])->group(function () {
     Route::get('/admin/avis', [AdminController::class, 'avis']);
     Route::patch('/admin/avis/{id}/visibility', [AdminController::class, 'toggleAvisVisibility']);
     Route::delete('/admin/avis/{id}', [AdminController::class, 'destroyAvis']);
+
+    //Commandes
+    Route::get('/commandes', [CommandeController::class, 'index']);
+    Route::delete('/admin/commandes/{commande}', [CommandeController::class, 'destroy']);
+
 });

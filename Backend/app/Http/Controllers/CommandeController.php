@@ -15,7 +15,6 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Commande::class);
         return Commande::with(['user', 'products'])->latest()->get();
     }
 
@@ -53,7 +52,7 @@ class CommandeController extends Controller
         $defaultFee = (float) config('livraison.default_fee', 40);
         $freeThreshold = (float) config('livraison.free_shipping_threshold', 500);
 
-        $fraisLivraison = ($freeThreshold > 0 && $sousTotal >= $freeThreshold)
+        $fraisLivraison = ($freeThreshold > 0 && $sousTotal > $freeThreshold)
             ? 0.0
             : (float) ($villes[$validated['ville']] ?? $defaultFee);
 
@@ -99,29 +98,9 @@ class CommandeController extends Controller
             'commande' => $commande,
         ], 201);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Commande $commande)
     {
-        $this->authorize('delete', $commande);
         $commande->delete();
         return response()->json(['message' => 'Commande supprimée']);
     }
