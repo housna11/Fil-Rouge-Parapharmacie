@@ -20,6 +20,6 @@ class ConfirmationCommandeMail extends Mailable
     public function build()
     {
         return $this->subject('Confirmation de votre commande #' . $this->commande->id . ' - ParaPlus')
-            ->view('emails.commandes.confirmation');
+            ->view('emails.confirmation');
     }
 }
