@@ -52,7 +52,7 @@ class CommandeController extends Controller
         $defaultFee = (float) config('livraison.default_fee', 40);
         $freeThreshold = (float) config('livraison.free_shipping_threshold', 500);
 
-        $fraisLivraison = ($freeThreshold > 0 && $sousTotal > $freeThreshold)
+        $fraisLivraison = ($freeThreshold > 0 && $sousTotal >= $freeThreshold)
             ? 0.0
             : (float) ($villes[$validated['ville']] ?? $defaultFee);
 
